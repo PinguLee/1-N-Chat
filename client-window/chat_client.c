@@ -32,7 +32,7 @@ int main()
     while (1)
     {
         /* 사용자로부터 메시지 입력받기 */
-        printf("Enter message: ");          // 메시지 입력 요청
+        printf("입력 : ");                  // 메시지 입력 요청
         fgets(message, BUFFER_SIZE, stdin); // 입력된 메시지를 버퍼에 저장
 
         /* 서버로 메시지 전송 */
@@ -42,7 +42,7 @@ int main()
         /* 서버로부터 응답 받기 */
         recv_size = recv(sock, server_reply, BUFFER_SIZE, 0); // 서버로부터 데이터 수신
         server_reply[recv_size] = '\0';                       // 수신된 데이터의 끝에 null 문자 추가하여 문자열로 처리
-        printf("Server reply: %s\n", server_reply);           // 서버의 응답을 출력
+        printf("서버 : %s\n", server_reply);                  // 서버의 응답을 출력
     }
 
     /* 소켓 종료 */
