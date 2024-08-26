@@ -4,5 +4,5 @@
 
 
 ## 참고
-https://man7.org/linux/man-pages/man2/socket.2.html
-https://learn.microsoft.com/ko-kr/windows/win32/api/winsock2/nf-winsock2-socket
+- https://man7.org/linux/man-pages/man2/socket.2.html
+- https://learn.microsoft.com/ko-kr/windows/win32/api/winsock2/nf-winsock2-socket
