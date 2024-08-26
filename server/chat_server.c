@@ -41,7 +41,11 @@ int main() {
     exit(1);  // 문제가 있을시 1을 반환하고 종료
   }
 
-  printf("소켓 생성 완료");
+  address.sin_family = AF_INET; // IPv4로 설정
+  address.sin_addr.s_addr = INADDR_ANY; // 모든 네트워크 인터페이스 사용 -> 서버가 여러 네트워크 인터페이스를 가지고 있더라도 모든 인터페에스에서 들어오는 요청을 받기 위해 (ex. 서버가 여러 IP 주소를 가질 때)
+  address.sin_port = htons(PORT); // 호스트 바이트 순서를 네트워크 바이트 순서로 변환
+
+  printf("소켓이 포트 %d에 바인딩 완료\n", PORT);
 
   // 보류
 
