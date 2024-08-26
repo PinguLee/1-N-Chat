@@ -1,8 +1,8 @@
+#include <arpa/inet.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include <arpa/inet.h>
 
 #define PORT 3288
 #define BUFFER_SIZE 1024
@@ -17,9 +17,14 @@
 
 */
 
-int main()
-{
-  int server_socket = socket(PF_INET, SOCK_STREAM, 0);
+int main() {
+  // 소켓 생성
+  int socket_fd = socket(AF_INET, SOCK_STREAM, 0);
+
+  if (socket_fd) {
+    perror("서버 소켓 생성 실패");
+    exit(EXIT_FAILURE);
+  }
 
   return 0;
 }
