@@ -23,7 +23,7 @@ int main() {
 
   if (socket_fd) {
     perror("서버 소켓 생성 실패");
-    exit(EXIT_FAILURE);
+    exit(1);  // 문제가 있을시 1을 반환하고 종료
   }
 
   return 0;
