@@ -37,17 +37,29 @@ int main() {
   int socket_fd = socket(AF_INET, SOCK_STREAM, 0);
 
   if (socket_fd) {
-    perror("서버 소켓 생성 실패");
-    exit(1);  // 문제가 있을시 1을 반환하고 종료
+    perror("서버 소켓 생성 실패"); /* printf와 달리 errno 값을 참조하여 오류에
+                                    대한 설명 자동으로 생성 (errno 는 C에서
+                                    시스템 호출, 라이브러리 함수가 실패했을때
+                                    오류 정보를 정수로 제공해주는 전역변수)*/
+    exit(1); /* 문제가 있을시 1을 반환하고 종료*/
   }
 
-  address.sin_family = AF_INET; // IPv4로 설정
-  address.sin_addr.s_addr = INADDR_ANY; // 모든 네트워크 인터페이스 사용 -> 서버가 여러 네트워크 인터페이스를 가지고 있더라도 모든 인터페에스에서 들어오는 요청을 받기 위해 (ex. 서버가 여러 IP 주소를 가질 때)
-  address.sin_port = htons(PORT); // 호스트 바이트 순서를 네트워크 바이트 순서로 변환
+  address.sin_family = AF_INET;  // IPv4로 설정
+  address.sin_addr.s_addr =
+      INADDR_ANY; /* 모든 네트워크 인터페이스 사용 -> 서버가 여러 네트워크
+                   인터페이스를 가지고 있더라도 모든 인터페에스에서 들어오는
+                   요청을 받기 위해(ex.서버가 여러 IP 주소를 가질 때) */
+  address.sin_port =
+      htons(PORT);  // 호스트 바이트 순서를 네트워크 바이트 순서로 변환
+
+  if ((new_socket = accept(server_fd, (struct sockaddr *)&address,
+                           (socklen_t *)&addrlen)) < 0) {
+    perror("accept");
+    close(server_fd);
+    exit(1);
+  }
 
   printf("소켓이 포트 %d에 바인딩 완료\n", PORT);
-
-  // 보류
 
   close(socket_fd);
   return 0;
