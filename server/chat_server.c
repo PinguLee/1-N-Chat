@@ -36,6 +36,15 @@ int main() {
     exit(1);
   }
 
+  /*
+  클라이언트가 서버에 연결 요청을 보낸다.
+  서버는 listen 함수로 대기 큐를 설정한다.
+  accept 함수로 대기 중인 클라이언트 연결을 수락한다.
+
+  listen(소켓 파일 디스크립터, 대기 큐의 크기) {
+    return { 성공 = 0, 실패 = -1}
+  }
+  */
   if (listen(socket_fd, 3) < 0) {
     perror("소켓 리스닝 실패");
     close(socket_fd);
