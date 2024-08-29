@@ -16,31 +16,31 @@ int main() {
     char buffer[BUFFER_SIZE] = {0};
 
     if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
-        printf("¼ÒÄÏ ÃÊ±âÈ­ ½ÇÆĞ\n");
+        printf("ì†Œì¼“ ì´ˆê¸°í™” ì‹¤íŒ¨\n");
         exit(1);
     }
-    printf("¼ÒÄÏ ÃÊ±âÈ­ ¼º°ø\n");
+    printf("ì†Œì¼“ ì´ˆê¸°í™” ì„±ê³µ\n");
 
     clientSocket = socket(AF_INET, SOCK_STREAM, 0);
     if (clientSocket == INVALID_SOCKET) {
-        printf("¼ÒÄÏ »ı¼º ½ÇÆĞ: %d\n", WSAGetLastError());
+        printf("ì†Œì¼“ ìƒì„± ì‹¤íŒ¨: %d\n", WSAGetLastError());
         WSACleanup();
         exit(1);
     }
-    printf("¼ÒÄÏ »ı¼º ¼º°ø\n");
+    printf("ì†Œì¼“ ìƒì„± ì„±ê³µ\n");
 
     serverAddress.sin_family = AF_INET;
-    serverAddress.sin_addr.s_addr = inet_addr("127.0.0.1");
+    serverAddress.sin_addr.s_addr = inet_addr("172.29.133.231");
     serverAddress.sin_port = htons(PORT);
 
     if (connect(clientSocket, (struct sockaddr *)&serverAddress, sizeof(serverAddress)) == SOCKET_ERROR) {
-        printf("¼­¹ö ¿¬°á ½ÇÆĞ: %d\n", WSAGetLastError());
+        printf("ì„œë²„ ì—°ê²° ì‹¤íŒ¨: %d\n", WSAGetLastError());
         closesocket(clientSocket);
         WSACleanup();
         exit(1);
     }
 
-    printf("¼­¹ö ¿¬°á ¼º°ø\n");
+    printf("ì„œë²„ ì—°ê²° ì„±ê³µ\n");
 
     closesocket(clientSocket);
     WSACleanup();
