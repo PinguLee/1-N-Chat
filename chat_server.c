@@ -12,7 +12,8 @@ int main() {
     int new_socket;
     struct sockaddr_in address;
     int addrlen = sizeof(address);
-    char buffer[BUFFER_SIZE] = {0};
+    char *buffer;
+    int buffer_size = BUFFER_SIZE;
 
     server_fd = socket(AF_INET, SOCK_STREAM, 0);
     if (server_fd < 0) {
@@ -48,15 +49,24 @@ int main() {
     }
     printf("클라이언트 연결 성공\n");
 
+    buffer = (char *)malloc(buffer_size);
+    if (buffer == NULL) {
+        perror("메모리 할당 실패");
+        close(new_socket);
+        close(server_fd);
+        exit(1);
+    }
+
     while (1) {
-        int read_data = read(new_socket, buffer, BUFFER_SIZE);
+        int read_data = read(new_socket, buffer, buffer_size);
         if (read_data > 0) {
             printf("클라이언트 : %s\n", buffer);
-            send(new_socket, buffer, strlen(buffer), 0);
-            memset(buffer, 0, BUFFER_SIZE);
+            send(new_socket, buffer, read_data, 0);
+            memset(buffer, 0, buffer_size);
         }
     }
 
+    free(buffer);
     close(new_socket);
     close(server_fd);
     return 0;
