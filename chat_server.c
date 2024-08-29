@@ -12,12 +12,14 @@ int main() {
     int new_socket;
     struct sockaddr_in address;
     int addrlen = sizeof(address);
+    char buffer[BUFFER_SIZE] = {0};
 
     server_fd = socket(AF_INET, SOCK_STREAM, 0);
     if (server_fd < 0) {
-        perror("소켓 생성 실패\n");
+        perror("소켓 생성 실패");
         exit(1);
     }
+
     printf("소켓 생성 성공\n");
 
     address.sin_family = AF_INET;
@@ -31,7 +33,7 @@ int main() {
     }
     printf("소켓 바인딩 성공\n");
 
-    if (listen(server_fd, 3) < 0) {
+    if (listen(server_fd, 16) < 0) {
         perror("소켓 리스닝 실패\n");
         close(server_fd);
         exit(1);
@@ -46,8 +48,13 @@ int main() {
     }
     printf("클라이언트 연결 성공\n");
 
-    while(1) {
-        
+    while (1) {
+        int read_data = read(new_socket, buffer, BUFFER_SIZE);
+        if (read_data > 0) {
+            printf("클라이언트 : %s\n", buffer);
+            send(new_socket, buffer, strlen(buffer), 0);
+            memset(buffer, 0, BUFFER_SIZE);
+        }
     }
 
     close(new_socket);

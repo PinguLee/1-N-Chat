@@ -16,7 +16,7 @@ int main() {
     char buffer[BUFFER_SIZE] = {0};
 
     if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
-        printf("소켓 초기화 실패\n");
+        printf("소켓 초기화 실패: %d\n ", WSAGetLastError());
         exit(1);
     }
     printf("소켓 초기화 성공\n");
@@ -42,8 +42,13 @@ int main() {
 
     printf("서버 연결 성공\n");
 
-        while(1) {
-        
+    while (1) {
+        printf("입력: ");
+        fgets(buffer, BUFFER_SIZE, stdin);
+        send(clientSocket, buffer, strlen(buffer), 0);
+        memset(buffer, 0, BUFFER_SIZE);
+        recv(clientSocket, buffer, BUFFER_SIZE, 0);
+        printf("Server: %s\n", buffer);
     }
 
     closesocket(clientSocket);
