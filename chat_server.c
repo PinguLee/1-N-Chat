@@ -46,6 +46,10 @@ int main() {
     }
     printf("클라이언트 연결 성공\n");
 
+    while(1) {
+        
+    }
+
     close(new_socket);
     close(server_fd);
     return 0;

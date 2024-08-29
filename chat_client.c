@@ -42,6 +42,10 @@ int main() {
 
     printf("서버 연결 성공\n");
 
+        while(1) {
+        
+    }
+
     closesocket(clientSocket);
     WSACleanup();
     return 0;
