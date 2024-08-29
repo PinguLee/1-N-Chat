@@ -54,6 +54,25 @@ int main() {
     }
     printf("클라이언트 연결 성공\n");
 
+    if (send(new_socket, message, strlen(message), 0) < 0) {
+        perror("데이터 송신 실패");
+        close(new_socket);
+        close(server_fd);
+        exit(1);
+    }
+
+    int bytes_received = recv(new_socket, buffer, BUFFER_SIZE, 0);
+    if (bytes_received < 0) {
+        perror("데이터 수신 실패");
+        close(new_socket);
+        close(server_fd);
+        exit(1);
+    } else if (bytes_received == 0) {
+        printf("클라이언트가 연결을 종료했습니다.\n");
+    } else {
+        printf("클라이언트가 보낸 데이터 : %s\n", buffer);
+    }
+
     // 클라이언트와의 연결 종료
     close(new_socket);
     close(server_fd);
