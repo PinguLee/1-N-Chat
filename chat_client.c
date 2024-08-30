@@ -45,10 +45,11 @@ int main() {
     while (1) {
         printf("입력: ");
         fgets(buffer, BUFFER_SIZE, stdin);
+        buffer[strcspn(buffer, "\n")] = '\0';
         send(clientSocket, buffer, strlen(buffer), 0);
         memset(buffer, 0, BUFFER_SIZE);
         recv(clientSocket, buffer, BUFFER_SIZE, 0);
-        printf("Server: %s\n", buffer);
+        printf("서버로부터 받은 메시지: %s\n", buffer);
     }
 
     closesocket(clientSocket);
